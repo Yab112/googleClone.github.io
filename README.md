@@ -6,7 +6,7 @@ Loom ![alt text](image.png): (https://www.loom.com/share/76d1f7e7f7334aee8e0250f
 
 Welcome to the **Google Flights Clone**! This is a React.js-based flight search app using Material UI v6.1.1 and the RapidAPI Sky Scraper API to search and display flight results. The project showcases a user-friendly flight search interface and results display with **Accordion-style flight details**, similar to Google Flights.
 
-## 🚀 Features
+## 🚀 Feature
 
 - **Flight Search Interface**: Users can search for flights by origin, destination, trip type, flight type, and number of passengers.
 - **Flight Results Accordion**: Results are displayed using an accordion UI component that shows the flight date and price, with detailed flight information available in the dropdown.
