@@ -8,7 +8,7 @@ export const data = [
         "imageUrl": "https://via.placeholder.com/150?text=Nairobi"
     },
     {
-        "destination": "Mombasa",
+        "destination": "Mombaasa",
         "price": "ETB 38,000",
         "dates": "Nov 8 — Nov 14",
         "stops": "1 stop",

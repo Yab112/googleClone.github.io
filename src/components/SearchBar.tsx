@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useCallback } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 
@@ -31,7 +32,16 @@ export default function SearchBar() {
   const [originInputValue, setOriginInputValue] = useState<string>("");
   const [destinationInputValue, setDestinationInputValue] = useState<string>("");
   const [destination, setDestination] = useState<string | null>(null);
-  const [flights, setFlights] = useState<any[]>([]);
+  interface Flight {
+    id: string;
+    airline: string;
+    departureTime: string;
+    arrivalTime: string;
+    price: number;
+    [key: string]: string | number;
+  }
+
+  const [flights, setFlights] = useState<Flight[]>([]);
 
   const [originId, setOriginId] = useState<string>("");
   const [destinationId, setDestinationId] = useState<string>("");
@@ -54,8 +64,6 @@ export default function SearchBar() {
     setType(event.target.value);
   };
 
-  // Shared function to fetch airports based on input value
-  // Memoize the fetchAirports function
   const fetchAirports = useCallback(async (query: string) => {
     try {
       const response = await axios.get(
@@ -67,7 +75,7 @@ export default function SearchBar() {
           },
         }
       );
-      return response.data.data || []; // Return empty array if no data
+      return response.data.data || []; 
     } catch (error) {
       console.error("Error fetching airport data:", error);
       setSnackbarMessage("Error fetching airport data.");
@@ -138,7 +146,18 @@ export default function SearchBar() {
         }
       );
       // setFlights(response.data);
-      setFlights(data)
+      setFlights(data.map((item, index) => ({
+        id: `flight-${index}`,
+        airline: "Unknown Airline", // Replace with actual data if available
+        departureTime: "00:00", // Replace with actual data if available
+        arrivalTime: "00:00", // Replace with actual data if available
+        price: parseFloat(item.price),
+        destination: item.destination,
+        dates: item.dates,
+        stops: item.stops,
+        duration: item.duration,
+        imageUrl: item.imageUrl,
+      })));
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching flights:", error);
@@ -165,9 +184,9 @@ export default function SearchBar() {
             returnDate={returnDate}
             originOptions={originOptions}
             destinationOptions={destinationOptions}
-            setOrigin={setOrigin}
+            setOrigin={(value) => setOrigin(value?.presentation?.suggestionTitle || null)}
             setOriginInputValue={setOriginInputValue}
-            setDestination={setDestination}
+            setDestination={(value) => setDestination(value?.presentation?.suggestionTitle || null)}
             setDestinationInputValue={setDestinationInputValue}
             setDeparture={setDeparture}
             setReturnDate={setReturnDate}

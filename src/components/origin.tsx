@@ -11,11 +11,11 @@ interface OriginProps {
     destinationInputValue: string;
     departure: Dayjs | null;
     returnDate: Dayjs | null;
-    originOptions: Array<any>;
-    destinationOptions: Array<any>;
-    setOrigin: (value: any | null) => void;
+    originOptions: Array<{ presentation?: { suggestionTitle?: string }; entityId?: string; skyId?: string }>;
+    destinationOptions: Array<{ presentation?: { suggestionTitle?: string }; entityId?: string; skyId?: string }>;
+    setOrigin: (value: { presentation?: { suggestionTitle?: string }; entityId?: string; skyId?: string } | null) => void;
     setOriginInputValue: (value: string) => void;
-    setDestination: (value: any | null) => void;
+    setDestination: (value: { presentation?: { suggestionTitle?: string }; entityId?: string; skyId?: string } | null) => void;
     setDestinationInputValue: (value: string) => void;
     setDeparture: (value: Dayjs | null) => void;
     setReturnDate: (value: Dayjs | null) => void;
@@ -52,16 +52,16 @@ const Origin: React.FC<OriginProps> = ({
                 <div className="flex rounded bg-none items-center p-2 ">
                     <Autocomplete
                         id="origin-autocomplete"
-                        value={origin}
+                        value={origin ? { presentation: { suggestionTitle: origin } } : null}
                         inputValue={originInputValue}
                         onInputChange={(_event, newInputValue) => setOriginInputValue(newInputValue)}
                         sx={{ width: 200 }}
                         options={originOptions}
-                        getOptionLabel={(option: any) => option?.presentation?.suggestionTitle || ""}
-                        onChange={(_event, value: any | null) => {
+                        getOptionLabel={(option: { presentation?: { suggestionTitle?: string } }) => option?.presentation?.suggestionTitle || ""}
+                        onChange={(_event, value: { presentation?: { suggestionTitle?: string }; entityId?: string; skyId?: string } | null) => {
                             setOrigin(value);
                             setOriginId(value?.entityId || "");
-                            setOriginSkyId(value?.skyId);
+                            setOriginSkyId(value?.skyId || "");
                         }}
                         renderInput={(params) => <TextField {...params} label="Where from?" />}
                     />
@@ -71,16 +71,16 @@ const Origin: React.FC<OriginProps> = ({
                 <div className="flex rounded bg-none items-center p-2 ">
                     <Autocomplete
                         id="destination-autocomplete"
-                        value={destination}
+                        value={destination ? { presentation: { suggestionTitle: destination } } : null}
                         inputValue={destinationInputValue}
                         onInputChange={(_event, newInputValue) => setDestinationInputValue(newInputValue)}
                         sx={{ width: 200 }}
                         options={destinationOptions}
-                        getOptionLabel={(option: any) => option?.presentation?.suggestionTitle || ""}
-                        onChange={(_event, value: any | null) => {
+                        getOptionLabel={(option: { presentation?: { suggestionTitle?: string } }) => option?.presentation?.suggestionTitle || ""}
+                        onChange={(_event, value: { presentation?: { suggestionTitle?: string }; entityId?: string; skyId?: string } | null) => {
                             setDestination(value);
                             setDestinationId(value?.entityId || "");
-                            setDestinationSkyId(value?.skyId);
+                            setDestinationSkyId(value?.skyId || "");
                         }}
                         renderInput={(params) => <TextField {...params} label="Where to?" />}
                     />
